@@ -1,0 +1,82 @@
+{% extends "musify/base.html" %} 
+{% load static %}
+{% block content %} 
+<!-- Displaying the tabs -->
+<div id="carouselExampleInterval" class="carousel slide mt-3" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-interval="3000">
+      <a href="{% url 'home' %}"><img src="{% static 'musify/newrelease.jpg' %}" style="border: 1.5px solid #fffdd0;" height="125px" width="125px" class="image d-block mx-auto" alt="Album Cover Art"></a>
+    </div>
+    <div class="carousel-item" data-interval="3000">
+      <a href="{% url 'home-search-artist' %}"><img src="{% static 'musify/artists.jpg' %}" style="border: 1.5px solid #fffdd0;" height="125px" width="125px" class="image d-block mx-auto" alt="Album Cover Art"></a>
+    </div>
+    <div class="carousel-item" data-interval="3000">
+      <a href="{% url 'home-search-playlist' %}"><img src="{% static 'musify/playlists.jpg' %}" style="border: 1.5px solid #fffdd0;" height="125px" width="125px" class="image d-block mx-auto" alt="Album Cover Art"></a>
+    </div>
+    <div class="carousel-item" data-interval="3000">
+      <a href="{% url 'home-search-album' %}"><img src="{% static 'musify/albums.jpg' %}" style="border: 1.5px solid #fffdd0;" height="125px" width="125px" class="image d-block mx-auto" alt="Album Cover Art"></a>
+    </div>
+    <div class="carousel-item" data-interval="3000">
+      <a href="{% url 'home-pop' %}"><img src="{% static 'musify/pop.jpg' %}" style="border: 1.5px solid #fffdd0;" height="125px" width="125px" class="image d-block mx-auto" alt="Album Cover Art"></a>
+    </div>
+    <div class="carousel-item" data-interval="3000">
+      <a href="{% url 'home-party' %}"><img src="{% static 'musify/party.jpg' %}" style="border: 1.5px solid #fffdd0;" height="125px" width="125px" class="image d-block mx-auto" alt="Album Cover Art"></a>
+    </div>
+    <div class="carousel-item" data-interval="3000">
+      <a href="{% url 'home-hiphop' %}"><img src="{% static 'musify/hiphop.jpg' %}" style="border: 1.5px solid #fffdd0;" height="125px" width="125px" class="image d-block mx-auto" alt="Album Cover Art"></a>
+    </div>
+    <div class="carousel-item">
+      <a href="{% url 'home-bollywood' %}"><img src="{% static 'musify/bollywood.jpg' %}" style="border: 1.5px solid #fffdd0;" height="125px" width="125px" class="image d-block mx-auto" alt="Album Cover Art"></a>
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleInterval" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleInterval" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+<hr/>
+
+<!-- Displaying search results -->
+{% if flag == "search" %}
+  <h1 style="text-align: center; margin-bottom: 30px;">Search Results</h1>
+  <div class="row">
+    <!-- Extracting data from the json response -->
+    {% for k in data %}  
+      <div class="col-md-4">
+        <center>
+            <div class="containerc">
+              <!-- Song Cover Picture -->
+              <img src="{{k.album.images.1.url}}" width="300px" height="300px" class="mb-3 image" alt="Song Cover Picture">
+              <div class="middle">
+                <h5 class="text">Song<br/><a class="c" href="{{k.external_urls.spotify}}" target="_blank" style="text-decoration: none; font-size: 18px;">{{k.name}}</a></h5>
+                <h5 class="text">Artist<br/><a class="c" href="{{k.artists.0.external_urls.spotify}}" target="_blank" style="text-decoration: none; font-size: 18px;">{{k.artists.0.name}}</a></h5>
+              </div>
+            </div>
+        </center>
+      </div>
+    {% endfor %}
+  </div>
+
+<!-- Displaying Pop Playlists -->
+{% else %}
+  <h1 style="text-align: center; margin-bottom: 30px;">Pop</h1>
+  <div class="row">
+    {% for k in data %}
+      <div class="col-md-4">
+        <center>
+            <div class="containerc">
+              <img src="{{k.images.0.url}}" width="300px" height="300px" class="mb-3 image" alt="Album Cover Art">
+              <div class="middle">
+                <h5 class="text">Playlist<br/><a class="c" href="{{k.external_urls.spotify}}" target="_blank" style="text-decoration: none; font-size: 18px;">{{k.name}}</a></h5>
+              </div>
+            </div>
+        </center>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+{% endblock content %}

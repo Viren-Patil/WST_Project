@@ -1,0 +1,33 @@
+{% extends "musify/base_login.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <!-- Login form -->
+                <legend class="border-bottom">Log In</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-success" type="submit">Login</button>
+                <small class="text-muted ml-2">
+                    <a href="{% url 'password_reset' %}" style="padding-right: 10px;">Forgot Password?</a>
+                    <a href="{% url 'username_display' %}">Forgot Username?</a>
+                </small>
+            </div>
+        </form>
+        <div class="border-top pt-3 pb-3">
+            <small class="text-muted">
+                <!-- Signup Link -->
+                Need an Account?
+                <a href="{% url 'register' %}" class="ml-2">Sign up</a>
+            </small>
+        </div>
+        OR
+        <div class="pt-3">
+            Login with
+            <a href="{% url 'social:begin' 'spotify' %}" style="text-decoration: none; color: #1db954;">Spotify <i class="fab fa-spotify fa-lg"></i></a>
+        </div>
+    </div>
+{% endblock content %}
